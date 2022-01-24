@@ -6,10 +6,31 @@
 /*   By: asousa-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 09:16:45 by asousa-l          #+#    #+#             */
-/*   Updated: 2022/01/24 09:20:04 by asousa-l         ###   ########.fr       */
+/*   Updated: 2022/01/24 09:51:03 by asousa-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_atoi(char *str)
 {
+	int	c;
+	int	s;
+	int	tot;
 
+	i = 0;
+	s = 1;
+	tot = 0;
+	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ')
+		i++;
+	while (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			s *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		tot = (str[i] - '0') + (tot * 10);
+		i++;
+	}
+	return (tot * s);
+}

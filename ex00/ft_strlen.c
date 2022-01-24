@@ -6,11 +6,11 @@
 /*   By: asousa-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 08:46:14 by asousa-l          #+#    #+#             */
-/*   Updated: 2022/01/24 08:48:38 by asousa-l         ###   ########.fr       */
+/*   Updated: 2022/01/24 18:41:54 by asousa-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	c;
 
