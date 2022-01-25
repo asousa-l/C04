@@ -6,7 +6,7 @@
 /*   By: asousa-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:42:20 by asousa-l          #+#    #+#             */
-/*   Updated: 2022/01/24 21:11:40 by asousa-l         ###   ########.fr       */
+/*   Updated: 2022/01/25 09:29:03 by asousa-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 int	ft_check_base(char *base)
@@ -16,8 +16,12 @@ int	ft_check_base(char *base)
 	i = 0;
 	while (*base != '\0')
 	{
-		if (base[i] == signs() || base[i] == base[i + 1] || base[i] == spaces())
+		if (base[i] == '+' || base[i] == '-' || base[i] == base[i + 1] || \
+				base[i] == ' ' || base[i] == '\n' || base[i] == '\t' || \
+				base[i] == '\v' || base[i] == '\f' || base[i] == '\r')
+		{
 			return (0);
+		}
 		i++;
 	}
 	if (i <= 1)
@@ -44,7 +48,8 @@ int	ft_base(char c, char *base)
 	int	n;
 
 	n = 0;
-	if (n == spaces() || n == signs())
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f' || \
+			c == '\r' || c == '+' || c == '-')
 		return (1);
 	while (base[n] != '\0')
 	{
@@ -92,9 +97,10 @@ int	ft_atoi_base(char *str, char *base)
 		return (0);
 	while (base[i] != '\0')
 		i++;
-	while (str[a] == spaces())
+	while (str[a] == ' ' || str[a] == '\n' || str[a] == '\t' || \
+			str[a] == '\v' || str[a] == '\f' || str[a] == '\r')
 		a++;
-	while (str[a] == signs())
+	while (str[a] == '+' || str[a] == '-')
 		a++;
 	while (str[a] >= '0' && str[a] <= '9')
 		a++;
