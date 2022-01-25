@@ -9,6 +9,8 @@
 /*   Updated: 2022/01/25 09:29:03 by asousa-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdio.h>
+
 int	ft_check_base(char *base)
 {
 	int	i;
@@ -34,7 +36,7 @@ int	ft_n(char str, char *base, int result, int tot)
 	int	i;
 
 	i = 0;
-	while (base[i] !+ '\0')
+	while (base[i] != '\0')
 	{
 		if (str == base[i])
 			return (tot + (result * i));
@@ -100,9 +102,19 @@ int	ft_atoi_base(char *str, char *base)
 	while (str[a] == ' ' || str[a] == '\n' || str[a] == '\t' || \
 			str[a] == '\v' || str[a] == '\f' || str[a] == '\r')
 		a++;
+	if (a > 3)
+		return (0);
 	while (str[a] == '+' || str[a] == '-')
 		a++;
+	if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
+		return (0);
 	while (str[a] >= '0' && str[a] <= '9')
 		a++;
 	return (ft_atoi_maker(str, base, i, a));
 }
+/*
+int main(void)
+{
+	printf("%d\n", ft_atoi_base("  -+-542 + 893 --", "01"));
+}
+*/

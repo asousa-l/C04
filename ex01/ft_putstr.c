@@ -19,9 +19,16 @@ void	ft_putchar(char c)
 
 void	ft_putstr(char *str)
 {
-	while (*str != '\0')
+	char	a;
+
+	while (true)
 	{
-		ft_putchar(str);
+		a = *str;
+		if (a == '\0')
+		{
+			break ;
+		}
+		ft_putchar(a);
 		str++;
 	}
 }
