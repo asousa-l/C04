@@ -6,7 +6,7 @@
 /*   By: asousa-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 10:12:12 by asousa-l          #+#    #+#             */
-/*   Updated: 2022/01/25 18:03:27 by asousa-l         ###   ########.fr       */
+/*   Updated: 2022/01/26 20:21:30 by asousa-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,8 @@ void	ft_putnbr_base(int nbr, char *base)
 int	main()
 {
 	int	nbr;
-	char	base[] = "poneyvif";
+	char	base[] = "0113456789";
 
-	nbr = 199;
+	nbr = 120295;
 	ft_putnbr_base(nbr, base);
-}
-*/
+}*/
