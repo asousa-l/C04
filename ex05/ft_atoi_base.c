@@ -6,115 +6,104 @@
 /*   By: asousa-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 18:42:20 by asousa-l          #+#    #+#             */
-/*   Updated: 2022/01/25 09:29:03 by asousa-l         ###   ########.fr       */
+/*   Updated: 2022/02/03 09:19:10 by asousa-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <unistd.h>
 #include <stdio.h>
 
-int	ft_check_base(char *base)
+int	check_base(char *base)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	while (*base != '\0')
+	if (base[0] == '\0' || base[1] == '\0')
 	{
-		if (base[i] == '+' || base[i] == '-' || base[i] == base[i + 1] || \
-				base[i] == ' ' || base[i] == '\n' || base[i] == '\t' || \
-				base[i] == '\v' || base[i] == '\f' || base[i] == '\r')
-		{
+		return (0);
+	}
+	i = 0;
+	while (base[i] != '\0')
+	{
+		if (base[i] == '-' || base[i] == '+' || base[i] <= 32 || base[i] > 126)
 			return (0);
+		j = i + 1;
+		while (base[j] != '\0')
+		{
+			if (base[i] == base[j])
+				return (0);
+			j++;
 		}
 		i++;
 	}
-	if (i <= 1)
-		return (0);
-	return (1);
+	return (i);
 }
 
-int	ft_n(char str, char *base, int result, int tot)
+int	ft_atoi(char *str, int *p_i)
+{
+	int	s;
+	int	i;
+
+	i = 0;
+	s = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	while (str[i] == 45 || str[i] == 43)
+	{
+		if (str[i] == 45)
+			s *= -1;
+		i++;
+	}
+	*p_i = i;
+	return (s);
+}
+
+int	is_inside(char c, char *base)
 {
 	int	i;
 
 	i = 0;
 	while (base[i] != '\0')
 	{
-		if (str == base[i])
-			return (tot + (result * i));
+		if (c == base[i])
+			return (i);
 		i++;
 	}
-	return (tot);
-}
-
-int	ft_base(char c, char *base)
-{
-	int	n;
-
-	n = 0;
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' || c == '\f' || \
-			c == '\r' || c == '+' || c == '-')
-		return (1);
-	while (base[n] != '\0')
-	{
-		if (base[n] == c)
-			return (2);
-		n++;
-	}
-	return (0);
-}
-
-int	ft_atoi_maker(char *str, char *base, int i, int a)
-{
-	int	s;
-	int	tot;
-	int	result;
-
-	a--;
-	s = 1;
-	tot = 0;
-	result = 1;
-	while ((str[a] >= 0))
-	{
-		if (str[a] == '-')
-		{
-			s = s * -1;
-		}	
-		if (ft_base(str[a], base) == 2)
-		{
-			tot = ft_n(str[a], base, result, tot);
-			result = result * i;
-		}
-		a--;
-	}
-	return (tot * s);
+	return (-1);
 }
 
 int	ft_atoi_base(char *str, char *base)
 {
 	int	i;
-	int	a;
+	int	s;
+	int	res;
+	int	len_base;
+	int	n;
 
 	i = 0;
-	a = 0;
-	if (ft_check_base(base) == 0)
-		return (0);
-	while (base[i] != '\0')
-		i++;
-	while (str[a] == ' ' || str[a] == '\n' || str[a] == '\t' || \
-			str[a] == '\v' || str[a] == '\f' || str[a] == '\r')
-		a++;
-	if (a > 3)
-		return (0);
-	while (str[a] == '+' || str[a] == '-')
-		a++;
-	if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
-		return (0);
-	while (str[a] >= '0' && str[a] <= '9')
-		a++;
-	return (ft_atoi_maker(str, base, i, a));
+	res = 0;
+	len_base = check_base(base);
+	if (len_base >= 2)
+	{
+		s = ft_atoi(str, &i);
+		n = is_inside(str[i], base);
+		while (n != -1)
+		{
+			res = (res * len_base) + n;
+			i++;
+			n = is_inside(str[i], base);
+		}
+		return (res *= s);
+	}
+	return (0);
 }
 /*
-int main(void)
+int		main(void)
 {
-	printf("%d\n", ft_atoi_base("  -+-542 + 893 --", "01"));
-}
-*/
+	printf("%d\n", ft_atoi_base("-123456", "0123456789"));
+	fflush(stdout);
+	printf("%d\n", ft_atoi_base("    ---+11110001001000000", "01"));
+	fflush(stdout);
+	printf("%d\n", ft_atoi_base("-1e240", "0123456789abcdef"));
+	fflush(stdout);
+}*/

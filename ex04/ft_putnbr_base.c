@@ -12,93 +12,72 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
-int	ft_size_base(char *base, int i)
+void	ft_putchar(char c)
 {
-	while (base[i] != '\0')
-		i++;
-	if (i < 2)
-		return (0);
-	return (i);
+	write(1, &c, 1);
 }
 
-int	ft_signal(char *base, int i)
+int	ft_checkbase(char *base)
 {
+	int	i;
+	int	j;
+
+	if (base[0] == '\0' || base[1] == 1)
+	{
+		return (0);
+	}
+	i = 0;
 	while (base[i] != '\0')
 	{
-		if (base[i] == '+' || base[i] == '-' || base[i] == '\t' || \
-			base[i] == '\n' || base[i] == '\v' || base[i] == '\r' || \
-			base[i] == '\f' || base[i] == ' ')
+		if (base[i] <= 32 || base[i] == 127 || base[i] == 45 || base[i] == 43)
 			return (0);
+		j = i + 1;
+		while (base[j] != '\0')
+		{
+			if (base[i] == base[j])
+				return (0);
+			j++;
+		}
 		i++;
 	}
-	return (1);
-}
-
-int	ft_equal(char *base, int i, int c, int b)
-{
-	while (i < c - 1)
-	{
-		if (base[i] == base[b])
-			break ;
-		else
-		{
-			if (b < 5)
-				b++;
-			else
-			{
-				i++;
-				b = i + 1;
-			}
-		}
-	}
-	if (i < c - 1)
-		return (0);
-	return (1);
-}
-
-void	ft_putnbr(int nbr, char *base, int c)
-{
-	if (nbr == -2147483648)
-	{
-		ft_putnbr(nbr / c, base, c);
-		write(1, &(base[-(nbr % c)]), 1);
-	}
-	else if (nbr < 0)
-	{
-		write(1, "-", 1);
-		ft_putnbr(-nbr, base, c);
-	}
-	else
-	{
-		if (nbr > c)
-		{
-			ft_putnbr((nbr / c), base, c);
-		}
-		write(1, &(base[nbr % c]), 1);
-	}
+	return (i);
 }
 
 void	ft_putnbr_base(int nbr, char *base)
 {
-	int	i;
-	int	b;
-	int	c;
+	int		len;
+	long	n;
 
-	i = 0;
-	b = 1;
-	c = ft_size_base(base, i);
-	ft_equal(base, i, c, b);
-	if ((ft_size_base(base, i) != 0) && (ft_signal(base, i) != 0) && \
-			(ft_equal(base, i, c, b) != 0))
-		ft_putnbr(nbr, base, c);
+	n = nbr;
+	len = ft_checkbase(base);
+	if ((len) >= 2)
+	{
+		if (n < 0)
+		{
+			ft_putchar('-');
+			n = -n;
+		}
+		if (n < len)
+		{
+			ft_putchar(base[n]);
+		}
+		if (n >= len)
+		{
+			ft_putnbr_base((n / len), base);
+			ft_putnbr_base((n % len), base);
+		}
+	}
 }
 /*
-int	main()
+int	main(void)
 {
-	int	nbr;
-	char	base[] = "0113456789";
-
-	nbr = 120295;
-	ft_putnbr_base(nbr, base);
+	ft_putnbr_base(-123456, "helo");
+	printf("\n");
+	fflush(stdout);
+	ft_putnbr_base(INT_MIN, "0123456789");
+	printf("\n");
+	fflush(stdout);
+	ft_putnbr_base(INT_MAX, "0123456789abcdef");
 }*/
